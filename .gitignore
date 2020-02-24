@@ -3,3 +3,6 @@
 ################################################################################
 
 /Web/.vs/Web/v16/Server/sqlite3
+/Web/Web/obj
+/Web/.vs/Web/v16/.suo
+/Web/.vs/Web/DesignTimeBuild
