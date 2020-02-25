@@ -32,7 +32,6 @@ namespace Web
                     options.ClientId = "Web";
                     options.ClientSecret = "secret";
                     options.ResponseType = OpenIdConnectResponseType.CodeIdTokenToken;
-                    options.Scope.Add("office");
                     options.Scope.Add("profile");
                     options.Scope.Add("email");
                     options.Scope.Add("openid");

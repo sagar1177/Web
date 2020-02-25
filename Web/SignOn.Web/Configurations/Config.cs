@@ -2,8 +2,11 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using Civica.Cito.SignOn.Configuration;
 using IdentityServer4.Models;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SignOn.Web.Configurations
 {
@@ -14,73 +17,86 @@ namespace SignOn.Web.Configurations
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Email(),
-                new IdentityResources.Profile(),
-                new IdentityResource
-                {
-                    Name = "office",
-                    UserClaims =
-                    {
-                        "office_number"
-                    }
-                }
+                new IdentityResources.Profile()
             };
 
-        public static IEnumerable<ApiResource> GetApis() =>
-            new List<ApiResource>
+        public static IEnumerable<ApiResource> GetApiResources(IConfiguration configuration)
+        {
+            var apis = new List<Api>();
+            configuration.GetSection("ApiResource").Get<List<Api>>();
+
+            var apiResources = new List<ApiResource>();
+            foreach (var api in apis)
             {
-                // new ApiResource("ApiOne"),
-                // new ApiResource("ApiTwo", new string[] { "rc.api.garndma" }),
-            };
-
-        public static IEnumerable<Client> GetClients() =>
-            new Client[]
-            {
-
-                new Client
+                apiResources.Add(new ApiResource(api.ApiName, api.ApiName)
                 {
-                    ClientId = "Web",
-                    ClientName ="mvc demo",
-                    AllowedGrantTypes ={
-                            GrantType.Hybrid,
-                            GrantType.ClientCredentials
-                        },
-                     AllowAccessTokensViaBrowser = true,
-                        RedirectUris = { "http://localhost/Web/signin-oidc" },
-                        ClientSecrets =
-                {
-                    new Secret("secret".Sha256())
-                },
-                    // where to redirect to after logout
-                    PostLogoutRedirectUris = { "http://localhost/Web/signout-callback-oidc" },
-                    AllowedScopes = { "openid", "email" ,"office","profile"},
-                    RequireConsent = false,
-                                    AllowOfflineAccess = true
-                },
-
-                new Client
-            {
-                ClientId = "mvc4",
-                ClientName = "MVC 4 Web Client",
-                AllowedGrantTypes = {
-                    GrantType.Hybrid,
-                    GrantType.ClientCredentials
-                },
-                AllowAccessTokensViaBrowser = true,
-
-                RequireConsent = false,
-
-                ClientSecrets =
-                {
-                    new Secret("secret".Sha256())
-                },
-
-                RedirectUris = { "http://localhost:53173/signin-oidc" },
-                PostLogoutRedirectUris = { "http://localhost:53173/signout-callback-oidc" },
-
-                AllowedScopes = { "openid", "email" ,"office","profile"},
-                AllowOfflineAccess = true
+                    ApiSecrets = { new Secret(api.Secret.Value.Sha256()) }
+                });
             }
 
-            };
+            return apiResources.ToArray();
+        }
+
+        public static IEnumerable<Client> GetClients(IConfiguration configuration)
+        {
+            var relyingParties = new List<AuthorizedClient>();
+
+            relyingParties = configuration.GetSection("AuthorizedClient").Get<List<AuthorizedClient>>();
+
+            var clients = new List<Client>();
+            foreach (var relyingParty in relyingParties)
+            {
+                var client = new Client();
+                client.ClientId = relyingParty.ClientId;
+
+                if (!string.IsNullOrEmpty(relyingParty.Protocol))
+                {
+                    client.ProtocolType = relyingParty.Protocol;
+                }
+
+                if (!string.IsNullOrEmpty(relyingParty.RedirectUri))
+                {
+                    client.RedirectUris = new List<string> { relyingParty.RedirectUri };
+                }
+
+                if (!string.IsNullOrEmpty(relyingParty.FrontChannelLogoutUri))
+                {
+                    client.PostLogoutRedirectUris = new List<string> { relyingParty.FrontChannelLogoutUri };
+                    client.BackChannelLogoutUri = relyingParty.FrontChannelLogoutUri;
+                }
+
+                client.RequireConsent = false;
+
+                if (relyingParty.GrantTypes.Any())
+                {
+                    client.AllowedGrantTypes = relyingParty.GrantTypes.Select(x => x.GrantTypeId).ToList();
+                }
+
+                client.IdentityTokenLifetime = relyingParty.TokenLifetime;
+
+                if (relyingParty.AccessTokenLifeTime != null)
+                {
+                    client.AccessTokenLifetime = relyingParty.AccessTokenLifeTime.Value;
+                }
+
+                if (relyingParty.Scopes != null && relyingParty.Scopes.Count() > 0)
+                {
+                    client.AllowedScopes = relyingParty.Scopes.Select(x => x.ScopeId).ToList();
+                }
+
+                if (relyingParty.Secret != null)
+                {
+                    client.ClientSecrets = new Secret[] { new Secret(relyingParty.Secret.Value.Sha256()) };
+                }
+
+                client.AllowAccessTokensViaBrowser = true;
+
+                client.AlwaysIncludeUserClaimsInIdToken = true;
+
+                clients.Add(client);
+            }
+
+            return clients.ToArray();
+        }
     }
 }

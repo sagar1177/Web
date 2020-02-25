@@ -30,9 +30,9 @@ namespace SignOn.Web
             services.AddIdentityServer()
                 .AddSigningCredential("CN=sagar")
                 .AddTestUsers(TestUsers.Users)
-                .AddInMemoryClients(Config.GetClients())
+                .AddInMemoryClients(Config.GetClients(this.Configuration))
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                .AddInMemoryApiResources(Config.GetApis());
+                .AddInMemoryApiResources(Config.GetApiResources(this.Configuration));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
