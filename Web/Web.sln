@@ -3,7 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{61586757-9B4C-4FDD-A6A0-E415A89F99CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{61586757-9B4C-4FDD-A6A0-E415A89F99CB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects.Web", "Projects.Web", "{80BF0240-8B59-456E-B274-9DC5EECFEF81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignOn.Web", "SignOn.Web\SignOn.Web.csproj", "{A01D097F-13B6-4A30-98FD-F2FA1393B5ED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{433E512E-1D56-463E-BD8F-B7F657F3F41B}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +24,17 @@ Global
 		{61586757-9B4C-4FDD-A6A0-E415A89F99CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61586757-9B4C-4FDD-A6A0-E415A89F99CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61586757-9B4C-4FDD-A6A0-E415A89F99CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A01D097F-13B6-4A30-98FD-F2FA1393B5ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A01D097F-13B6-4A30-98FD-F2FA1393B5ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A01D097F-13B6-4A30-98FD-F2FA1393B5ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A01D097F-13B6-4A30-98FD-F2FA1393B5ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{61586757-9B4C-4FDD-A6A0-E415A89F99CB} = {80BF0240-8B59-456E-B274-9DC5EECFEF81}
+		{A01D097F-13B6-4A30-98FD-F2FA1393B5ED} = {80BF0240-8B59-456E-B274-9DC5EECFEF81}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {663D7AD0-8E27-4193-9132-3A46550E7923}
