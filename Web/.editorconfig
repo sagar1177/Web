@@ -5,3 +5,6 @@ dotnet_diagnostic.SA1009.severity = error
 
 # SA1649: File name must match first type name
 dotnet_diagnostic.SA1649.severity = warning
+
+# SA1201: Elements must appear in the correct order
+dotnet_diagnostic.SA1201.severity = none

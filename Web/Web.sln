@@ -7,12 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects.Web", "Projects.Web", "{80BF0240-8B59-456E-B274-9DC5EECFEF81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignOn.Web", "SignOn.Web\SignOn.Web.csproj", "{A01D097F-13B6-4A30-98FD-F2FA1393B5ED}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{433E512E-1D56-463E-BD8F-B7F657F3F41B}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignOn.Web", "SignOn.Web\SignOn.Web.csproj", "{A01D097F-13B6-4A30-98FD-F2FA1393B5ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
